@@ -1,0 +1,38 @@
+set -ex
+
+IFACE=$(ls /sys/class/net | grep '^e' | head -n 1)
+
+#Instalacja LXD i update systemu
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+sudo snap install lxd
+
+#inicjalizacja kontenera z debian12 i aktualizacja 
+sudo cat lxd_config.yaml | sudo lxd init --preseed
+sudo lxc launch images:debian/12 centrala
+
+sudo lxc file push Transbit-CA.crt centrala/usr/local/share/ca-certificates/
+sleep 5
+sudo lxc exec centrala -- bash -c "update-ca-certificates"
+
+sudo lxc exec centrala -- bash -c "apt update && apt upgrade -y"
+sudo lxc exec centrala -- bash -c "apt install wget -y"
+
+#Instalacja centrali
+sudo lxc exec centrala -- bash -c "wget https://github.com/FreePBX/sng_freepbx_debian_install/raw/master/sng_freepbx_debian_install.sh -O /tmp/sng_freepbx_debian_install.sh"
+sleep 5
+sudo lxc exec centrala -- bash -c "bash /tmp/sng_freepbx_debian_install.sh"
+
+#Konfiguracja centrali
+sudo lxc file push eth0.network centrala/etc/systemd/network/
+sudo lxc file push pjsip.endpoint.conf centrala/etc/asterisk/
+sudo lxc file push pjsip.auth.conf centrala/etc/asterisk/
+sudo lxc file push pjsip.aor.conf centrala/etc/asterisk/
+
+#Usatwienie sieciowe
+sudo lxc stop centrala
+sudo lxc profile device remove default eth0
+sudo lxc network delete lxdbr0
+sudo lxc start centrala
+sudo lxc config device add centrala eth0 nic nictype=physical parent=$IFACE name=eth0
+
+sudo cp centrala /usr/local/bin/

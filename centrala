@@ -1,0 +1,23 @@
+#!/bin/bash
+
+IFACE=$(ls /sys/class/net | grep '^e' | head -n 1)
+
+case "$1" in
+    start)
+        lxc start centrala
+        ;;
+    stop)
+        lxc stop centrala
+        ip link set $IFACE up
+        ;;
+    restart)
+        lxc restart centrala
+        ;;
+    status)
+        lxc info centrala
+        ;;
+    *)
+        echo "Użycie: centrala {start|stop|restart|status}"
+        ;;
+esac
+

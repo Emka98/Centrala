@@ -1,0 +1,8 @@
+[Match]
+Name=eth0
+
+[Network]
+Address=10.60.8.8/24
+Gateway=10.60.8.1
+
+
