@@ -1,5 +1,3 @@
-set -ex
-
 IFACE=$(ls /sys/class/net | grep '^e' | head -n 1)
 
 #Instalacja LXD i update systemu
@@ -10,10 +8,6 @@ sudo snap install lxd
 sudo cat lxd_config.yaml | sudo lxd init --preseed
 sudo lxc launch images:debian/12 centrala
 
-sudo lxc file push Transbit-CA.crt centrala/usr/local/share/ca-certificates/
-sleep 5
-sudo lxc exec centrala -- bash -c "update-ca-certificates"
-
 sudo lxc exec centrala -- bash -c "apt update && apt upgrade -y"
 sudo lxc exec centrala -- bash -c "apt install wget -y"
 
@@ -21,6 +15,11 @@ sudo lxc exec centrala -- bash -c "apt install wget -y"
 sudo lxc exec centrala -- bash -c "wget https://github.com/FreePBX/sng_freepbx_debian_install/raw/master/sng_freepbx_debian_install.sh -O /tmp/sng_freepbx_debian_install.sh"
 sleep 5
 sudo lxc exec centrala -- bash -c "bash /tmp/sng_freepbx_debian_install.sh"
+
+#Uprawnienia
+sudo lxc config set centrala security.privileged true
+sudo lxc config set centrala security.nesting true
+sudo lxc config set centrala raw.lxc "lxc.cap.drop="
 
 #Konfiguracja centrali
 sudo lxc file push eth0.network centrala/etc/systemd/network/
