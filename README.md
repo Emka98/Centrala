@@ -12,7 +12,7 @@ uruchomienie funkcji nagrywania i odsłuchu wiadomości głosowych.
 Po instalacji system jest gotowy do działania z predefiniowanymi ustawieniami, takimi jak:
 
 extension 100 z hasłem 123,
-numer \777* do nagrywania i odsłuchu wiadomości.
+numer *777 do nagrywania i odsłuchu wiadomości.
 
 Projekt jest przeznaczony dla środowisk, które wymagają szybkiego wdrożenia centrali do testów telefonów VoIP.
 
