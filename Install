@@ -23,9 +23,9 @@ sudo lxc config set centrala raw.lxc "lxc.cap.drop="
 
 #Konfiguracja centrali
 sudo lxc file push eth0.network centrala/etc/systemd/network/
-sudo lxc file push pjsip.endpoint.conf centrala/etc/asterisk/
-sudo lxc file push pjsip.auth.conf centrala/etc/asterisk/
-sudo lxc file push pjsip.aor.conf centrala/etc/asterisk/
+sudo lxc file push confiCentrala.tar.gz centrala/tmp/
+sudo lxc exec centrala -- bash -c "fwconsole backup --restore /tmp/confiCentrala.tar.gz"
+
 
 #Usatwienie sieciowe
 sudo lxc stop centrala
