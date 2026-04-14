@@ -1,35 +1,31 @@
-Centrala to aplikacja służąca do zarządzania i koordynacji elementów systemu telekomunikacyjnego. 
-Projekt został zaprojektowany tak, aby umożliwić szybkie uruchomienie kompletnego środowiska wraz z domyślną konfiguracją,
-dzięki czemu użytkownik może natychmiast rozpocząć pracę bez konieczności ręcznego ustawiania parametrów.
-Wykorzystuje FreePBX.
+# SwtoCentrala
 
-Centrala automatyzuje:
+SwtoCentrala is an application designed for the automated management and coordination of telecommunication system components. Based on FreePBX, the project is designed to allow for the rapid deployment of a complete environment with a default configuration, eliminating the need for manual parameter setup.
 
-instalację i konfigurację środowiska,
-przygotowanie usług telekomunikacyjnych,
-tworzenie podstawowych rozszerzeń (extension),
-uruchomienie funkcji nagrywania i odsłuchu wiadomości głosowych.
-Po instalacji system jest gotowy do działania z predefiniowanymi ustawieniami, takimi jak:
+## Project Purpose
+This project is intended for environments that require fast deployment of a telephone exchange, specifically for:
+* Testing VoIP phones and devices.
+* Development laboratories.
+* Rapid prototyping of telecommunication services.
 
-extension 100 z hasłem 123,
-numer *777 do nagrywania i odsłuchu wiadomości.
+## Key Features
+* Automated Installation: Full configuration of the system environment and services.
+* Service Readiness: Immediate preparation of basic telecommunication services.
+* Extension Management: Automatic creation of basic internal numbers (extensions).
+* Voicemail Support: Activation of voice message recording and playback functions.
 
-Projekt jest przeznaczony dla środowisk, które wymagają szybkiego wdrożenia centrali do testów telefonów VoIP.
+## Default Configuration
+After installation, the system is ready to operate with the following settings:
+* Extension: 100
+* Password: 123
+* Recording/Playback: Number *777
 
-Instalacja:
-git clone https://github.com/Emka98/Centrala.git
+## Installation
+
+To install SwtoCentrala, clone the repository and run the installation script:
+
+```bash
+git clone [https://github.com/Emka98/Centrala.git](https://github.com/Emka98/Centrala.git)
 cd Centrala
 chmod +x Install
 ./Install
-
-Po instalacji w terimanulu wpisz:
-sudo centrala -help
-Wyświetli to opcje Centrali.
-
-Uwaga! 
-Centrala podczas działania przejmuje fizyczny interfejs sieciowy.
-
-Oznacza to, że:
-interfejs zostaje skonfigurowany i używany wyłącznie przez Centralę,
-może to spowodować utratę połączenia sieciowego na tym interfejsie,
-
